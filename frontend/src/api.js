@@ -2,7 +2,7 @@
  * API client for the LLM Council backend.
  */
 
-const API_BASE = 'http://localhost:8000';
+const API_BASE = "http://localhost:8000";
 
 export const api = {
   /**
@@ -11,7 +11,7 @@ export const api = {
   async listConversations() {
     const response = await fetch(`${API_BASE}/api/conversations`);
     if (!response.ok) {
-      throw new Error('Failed to list conversations');
+      throw new Error("Failed to list conversations");
     }
     return response.json();
   },
@@ -21,14 +21,14 @@ export const api = {
    */
   async createConversation() {
     const response = await fetch(`${API_BASE}/api/conversations`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({}),
     });
     if (!response.ok) {
-      throw new Error('Failed to create conversation');
+      throw new Error("Failed to create conversation");
     }
     return response.json();
   },
@@ -38,10 +38,10 @@ export const api = {
    */
   async getConversation(conversationId) {
     const response = await fetch(
-      `${API_BASE}/api/conversations/${conversationId}`
+      `${API_BASE}/api/conversations/${conversationId}`,
     );
     if (!response.ok) {
-      throw new Error('Failed to get conversation');
+      throw new Error("Failed to get conversation");
     }
     return response.json();
   },
@@ -53,15 +53,15 @@ export const api = {
     const response = await fetch(
       `${API_BASE}/api/conversations/${conversationId}/message`,
       {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ content }),
-      }
+      },
     );
     if (!response.ok) {
-      throw new Error('Failed to send message');
+      throw new Error("Failed to send message");
     }
     return response.json();
   },
@@ -71,10 +71,10 @@ export const api = {
    */
   async deleteAllConversations() {
     const response = await fetch(`${API_BASE}/api/conversations`, {
-      method: 'DELETE',
+      method: "DELETE",
     });
     if (!response.ok) {
-      throw new Error('Failed to delete conversations');
+      throw new Error("Failed to delete conversations");
     }
     return response.json();
   },
@@ -90,16 +90,16 @@ export const api = {
     const response = await fetch(
       `${API_BASE}/api/conversations/${conversationId}/message/stream`,
       {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ content }),
-      }
+      },
     );
 
     if (!response.ok) {
-      throw new Error('Failed to send message');
+      throw new Error("Failed to send message");
     }
 
     const reader = response.body.getReader();
@@ -110,16 +110,16 @@ export const api = {
       if (done) break;
 
       const chunk = decoder.decode(value);
-      const lines = chunk.split('\n');
+      const lines = chunk.split("\n");
 
       for (const line of lines) {
-        if (line.startsWith('data: ')) {
+        if (line.startsWith("data: ")) {
           const data = line.slice(6);
           try {
             const event = JSON.parse(data);
             onEvent(event.type, event);
           } catch (e) {
-            console.error('Failed to parse SSE event:', e);
+            console.error("Failed to parse SSE event:", e);
           }
         }
       }

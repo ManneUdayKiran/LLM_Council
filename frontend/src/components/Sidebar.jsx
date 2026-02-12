@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import './Sidebar.css';
+import { useState, useEffect } from "react";
+import "./Sidebar.css";
 
 export default function Sidebar({
   conversations,
@@ -30,12 +30,12 @@ export default function Sidebar({
             <div
               key={conv.id}
               className={`conversation-item ${
-                conv.id === currentConversationId ? 'active' : ''
+                conv.id === currentConversationId ? "active" : ""
               }`}
               onClick={() => onSelectConversation(conv.id)}
             >
               <div className="conversation-title">
-                {conv.title || 'New Conversation'}
+                {conv.title || "New Conversation"}
               </div>
               <div className="conversation-meta">
                 {conv.message_count} messages
